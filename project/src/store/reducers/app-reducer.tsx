@@ -9,6 +9,7 @@ export type AppReducerState = {
   currentGenre: GenreType,
   currentFilm: null | FilmClientProp,
   currentReviews: CommentProp[],
+  promoFilm: null | FilmClientProp,
 }
 
 export const initialAppState : AppReducerState = {
@@ -16,6 +17,7 @@ export const initialAppState : AppReducerState = {
   currentGenre: GenreType.ALL,
   currentFilm: null,
   currentReviews: [],
+  promoFilm: null,
 };
 
 export const AppReducer = createReducer(initialAppState, (builder) => {
