@@ -1,6 +1,7 @@
 export const ID = 0;
 
 export enum GenreType {
+  ALL = 'All',
   COMEDY = 'Comedy',
   CRIME = 'Crime',
   DOCUMENTARY = 'Documentary',
@@ -10,4 +11,10 @@ export enum GenreType {
   ROMANCE = 'Romance',
   SCI_FI = 'Sci-Fi',
   THRILLER = 'Thriller'
+}
+
+export enum AuthType {
+  AUTH = 'Auth',
+  NO_AUTH = 'No auth',
+  UNKNOWN = 'Unknown',
 }

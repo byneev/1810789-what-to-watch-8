@@ -1,5 +1,5 @@
 import { CommentPostProp, CommentProp } from '../types/comment-type';
-import { FilmClientProp, FilmServerProp } from '../types/fim-type';
+import { FilmClientProp, FilmServerProp } from '../types/film-type';
 import { GenreType, ID } from './const';
 import faker from  'faker';
 import { UserAuthClientProp, UserAuthServerProp, UserLoginProp } from '../types/user-type';
