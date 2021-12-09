@@ -13,7 +13,7 @@ import MoreButton from '../more-button/more-button';
 
 function Main():JSX.Element {
   const films = useSelector(getFilms);
-  const [currentFilms, setCurrentFilms] = useState<FilmClientProp[]>(films.slice(FILMS_COUNT));
+  const [currentFilms, setCurrentFilms] = useState<FilmClientProp[]>(films.slice(0, FILMS_COUNT));
 
   return (
     <React.Fragment>

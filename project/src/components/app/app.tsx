@@ -16,10 +16,10 @@ function App(): JSX.Element {
   return (
     <Router history={history}>
       <Switch>
-        <Route path={AppRoute.MAIN}>
+        <Route path={AppRoute.MAIN} exact>
           <Main />
         </Route>
-        <Route path={`${AppRoute.FILMS}:id`}>
+        <Route path={`${AppRoute.FILMS}:id`} exact>
           <FilmDetails />
         </Route>
       </Switch>

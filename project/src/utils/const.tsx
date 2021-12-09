@@ -37,3 +37,9 @@ export enum APIRoute {
   COMMENTS = '/comments',
   LOGOUT = '/logout',
 }
+
+export enum TabType {
+  OVERVIEW = 'Overview',
+  DETAILS = 'Details',
+  REVIEWS = 'Reviews',
+}

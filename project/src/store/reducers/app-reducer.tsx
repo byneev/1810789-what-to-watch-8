@@ -1,4 +1,4 @@
-import { GenreType } from '../../utils/const';
+import { GenreType, TabType } from '../../utils/const';
 import { CommentProp } from '../../types/comment-type';
 import { createReducer } from '@reduxjs/toolkit';
 import { setCurrentFilm, setCurrentGenre, setCurrentReviews, setFilms } from '../actions';
@@ -10,6 +10,7 @@ export type AppReducerState = {
   currentFilm: null | FilmClientProp,
   currentReviews: CommentProp[],
   promoFilm: null | FilmClientProp,
+  currentTab: TabType,
 }
 
 export const initialAppState : AppReducerState = {
@@ -18,6 +19,7 @@ export const initialAppState : AppReducerState = {
   currentFilm: null,
   currentReviews: [],
   promoFilm: null,
+  currentTab: TabType.OVERVIEW,
 };
 
 export const AppReducer = createReducer(initialAppState, (builder) => {

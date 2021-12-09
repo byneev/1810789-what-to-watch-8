@@ -1,17 +1,33 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentFilm } from '../../store/actions';
 // import { useParams } from 'react-router-dom';
-import { getFilms } from '../../store/selectors';
-import { ID } from '../../utils/const';
+import { getCurrentFilm, getCurrentTab, getFilms } from '../../store/selectors';
+import { getTabByContext } from '../../utils/functions';
 import FilmsList from '../films-list/films-list';
 import Logo from '../logo/logo';
+import Spinner from '../spinner/spinner';
 import UserBlock from '../user-block/user-block';
 
 function FilmDetails():JSX.Element {
   // const {idFromRoute} = useParams();
   // get film by id
-  let id = ID;
+  const tab = useSelector(getCurrentTab);
   const films = useSelector(getFilms);
-  const film = films[0];
+  const dispatch = useDispatch();
+  const film = useSelector(getCurrentFilm);
+
+  useEffect(() => {
+    dispatch(setCurrentFilm(films[0]));
+    return () => {
+      dispatch(setCurrentFilm(null));
+    };
+  });
+
+  if (!film) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <section className="film-card film-card--full">
@@ -64,31 +80,18 @@ function FilmDetails():JSX.Element {
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
+                    <a href="/" className="film-nav__link">Overview</a>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
+                    <a href="/" className="film-nav__link">Details</a>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
+                    <a href="/" className="film-nav__link">Reviews</a>
                   </li>
                 </ul>
               </nav>
 
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                {film.description.split('.').map((sentense) => <p key={++id}>{sentense}</p>)}
-                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {film.starring.join(', ')}</strong></p>
-              </div>
+              {getTabByContext(tab)}
             </div>
           </div>
         </div>

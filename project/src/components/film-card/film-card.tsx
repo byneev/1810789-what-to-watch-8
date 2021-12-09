@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Link } from 'react-router-dom';
 import { FilmClientProp } from '../../types/film-type';
 import { AppRoute } from '../../utils/const';
@@ -8,6 +9,7 @@ export type FilmCardProp = {
 
 function FilmCard({film}:FilmCardProp): JSX.Element {
   const { id, previewImage, name } = film;
+  console.log(previewImage);
   return (
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
