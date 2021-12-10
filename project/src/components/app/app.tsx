@@ -6,6 +6,7 @@ import Spinner from '../spinner/spinner';
 import {history} from '../../utils/history';
 import { AppRoute } from '../../utils/const';
 import FilmDetails from '../film-details/film-details';
+import MyList from '../my-list/my-list';
 
 function App(): JSX.Element {
   const films = useSelector(getFilms);
@@ -19,8 +20,9 @@ function App(): JSX.Element {
         <Route path={AppRoute.MAIN} exact>
           <Main />
         </Route>
-        <Route path={`${AppRoute.FILMS}:id`} exact>
-          <FilmDetails />
+        <Route path={`${AppRoute.FILMS}:id`} component={FilmDetails} exact />
+        <Route path={AppRoute.MY_LIST} exact>
+          <MyList />
         </Route>
       </Switch>
     </Router>

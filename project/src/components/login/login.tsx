@@ -1,6 +1,16 @@
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { getAuthorizeStatus } from '../../store/selectors';
+import { AppRoute, AuthType } from '../../utils/const';
 import Logo from '../logo/logo';
 
 function Login():JSX.Element {
+  const authStatus = useSelector(getAuthorizeStatus);
+
+  if (authStatus === AuthType.AUTH) {
+    <Redirect to={AppRoute.MAIN} />;
+  }
+
   return (
     <>
       <div className="user-page">
