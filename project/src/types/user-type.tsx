@@ -7,7 +7,7 @@ export type UserAuthServerProp = {
   'id': number,
   'email': string,
   'name': string,
-  'avatar_url': string,
+  'avatar_url': string | undefined,
   'token': string
 }
 

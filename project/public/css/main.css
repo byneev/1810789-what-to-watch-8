@@ -1442,3 +1442,14 @@ main {
     opacity: 0;
   }
 }
+
+.not-found__container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 33px;
+}
+
+.not-found__anchor {
+  color: #034d0f;
+}

@@ -31,6 +31,7 @@ export enum AppRoute {
   MY_LIST = '/mylist',
   FILMS = '/films/',
   PLAYER = '/player/',
+  NOT_FOUND = '/404',
 }
 
 export enum APIRoute {
@@ -47,6 +48,12 @@ export enum TabType {
   OVERVIEW = 'Overview',
   DETAILS = 'Details',
   REVIEWS = 'Reviews',
+}
+
+export enum HTTPCode {
+  NOT_FOUND = 404,
+  CLIENT_ERROR = 400,
+  UNAUTHORIZED = 401,
 }
 
 export const TenToOneArray:number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
