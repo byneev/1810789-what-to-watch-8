@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import App from './components/app/app';
-import { setAuthorizeStatus, setFilms } from './store/actions';
+import { setAuthorizeStatus } from './store/actions';
 import { RootReducer } from './store/reducers/root-reducer';
 import { createApi } from './utils/api';
-import { getMockClientFilms } from './utils/mock';
 import { ToastContainer, toast } from 'react-toastify';
 import { AppRoute, AuthType } from './utils/const';
-import { checkAutorizeStatus } from './store/api-actions';
+import { checkAutorizeStatus, getFilmsFromServer } from './store/api-actions';
+import 'react-toastify/dist/ReactToastify.css';
 
 const api = createApi(
   () => toast('Something goes wrong', {
@@ -30,7 +30,7 @@ const store = configureStore({
 });
 
 store.dispatch(checkAutorizeStatus());
-store.dispatch(setFilms(getMockClientFilms()));
+store.dispatch(getFilmsFromServer());
 
 ReactDOM.render(
   <Provider store={store}>

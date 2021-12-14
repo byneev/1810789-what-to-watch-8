@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getFilms } from '../../store/selectors';
+import { getFilms, getSelectorByGenre } from '../../store/selectors';
 import { FilmClientProp } from '../../types/film-type';
 import { FILMS_COUNT } from '../../utils/const';
 import FilmPreview from '../film-preview/film-preview';
@@ -12,7 +12,8 @@ import Logo from '../logo/logo';
 import MoreButton from '../more-button/more-button';
 
 function Main():JSX.Element {
-  const films = useSelector(getFilms);
+  const currentGenre = useSelector()
+  const films = getSelectorByGenre(getFilms);
   const [currentFilms, setCurrentFilms] = useState<FilmClientProp[]>(films.slice(0, FILMS_COUNT));
 
   return (

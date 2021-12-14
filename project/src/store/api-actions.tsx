@@ -1,15 +1,23 @@
+/* eslint-disable no-console */
+import { toast } from 'react-toastify';
 import { CommentPostProp } from '../types/comment-type';
 import { FilmServerProp } from '../types/film-type';
 import { ThunkActionResult } from '../types/thunk-type';
 import { UserLoginProp } from '../types/user-type';
-import { converServerFilmToClient } from '../utils/adapter';
+import { convertServerFilmToClient } from '../utils/adapter';
 import { APIRoute, AuthType } from '../utils/const';
 import { removeToken, setToken } from '../utils/token';
 import { setAuthorizeStatus, setCurrentFilm, setCurrentReviews, setFilms, setMyListFilms, setPromoFilm, setSimilarFilms } from './actions';
 
 export const checkAutorizeStatus = ():ThunkActionResult => async (dispatch, _getState, api) => {
-  await api.get(`${APIRoute.LOGIN}`);
-  dispatch(setAuthorizeStatus(AuthType.AUTH));
+  try {
+    await api.get(`${APIRoute.LOGIN}`);
+    dispatch(setAuthorizeStatus(AuthType.AUTH));
+  } catch {
+    toast.warn('You are not authorized', {
+      autoClose: 3000,
+    });
+  }
 };
 
 export const loginToCite = (prop : UserLoginProp):ThunkActionResult => async (dispatch, _getState, api) => {
@@ -24,14 +32,14 @@ export const LogoutFromCite = ():ThunkActionResult => async (dispatch, _getState
   dispatch(setAuthorizeStatus(AuthType.NO_AUTH));
 };
 
-export const getFilms = ():ThunkActionResult => async (dispatch, _getState, api) => {
+export const getFilmsFromServer = ():ThunkActionResult => async (dispatch, _getState, api) => {
   const response = await api.get(`${APIRoute.FILMS}`);
-  dispatch(setFilms(response.data.map((film : FilmServerProp) => converServerFilmToClient(film))));
+  dispatch(setFilms(response.data.map((film : FilmServerProp) => convertServerFilmToClient(film))));
 };
 
 export const getFilmById = (id:number):ThunkActionResult => async (dispatch, _getState, api) => {
   const response = await api.get(`${APIRoute.FILMS}${id}`);
-  dispatch(setCurrentFilm(converServerFilmToClient(response.data)));
+  dispatch(setCurrentFilm(convertServerFilmToClient(response.data)));
 };
 
 export const getSimilarFilms = (id: number):ThunkActionResult => async (dispatch, _getState, api) => {

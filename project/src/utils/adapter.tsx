@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { FilmClientProp, FilmServerProp } from '../types/film-type';
 import { UserAuthClientProp, UserAuthServerProp } from '../types/user-type';
 
@@ -10,7 +11,8 @@ export const convertServerUserAuthToClient = (userAuth: UserAuthServerProp) : Us
   return userAuthClient;
 };
 
-export const converServerFilmToClient = (film: FilmServerProp) : FilmClientProp => {
+export const convertServerFilmToClient = (film: FilmServerProp) : FilmClientProp => {
+  console.log(film);
   if (!film.poster_image ||
     !film.preview_image ||
     !film.background_image ||
@@ -19,7 +21,7 @@ export const converServerFilmToClient = (film: FilmServerProp) : FilmClientProp 
     !film.preview_video_link ||
     !film.scores_count ||
     !film.run_time ||
-    !film.is_favorite) {
+    film.is_favorite === undefined) {
     throw Error('Data error');
   }
 
