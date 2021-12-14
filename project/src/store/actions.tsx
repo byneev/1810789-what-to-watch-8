@@ -11,6 +11,8 @@ const enum Actions {
   setAuthorizeStatus = 'user/setAuthorizeStatus',
   setCurrentTab = 'app/setCurrentTab',
   setMyListFilms = 'user/setMyListFilms',
+  setSimilarFilms = 'app/setSimilarFilms',
+  setPromoFilm = 'app/setPromoFilm',
 }
 
 export const setFilms = createAction<FilmClientProp[]>(Actions.setFilms);
@@ -26,4 +28,8 @@ export const setAuthorizeStatus = createAction<AuthType>(Actions.setAuthorizeSta
 export const setCurrentTab = createAction<TabType>(Actions.setCurrentTab);
 
 export const setMyListFilms = createAction<FilmClientProp[]>(Actions.setMyListFilms);
+
+export const setSimilarFilms = createAction<FilmClientProp[]>(Actions.setSimilarFilms);
+
+export const setPromoFilm = createAction<FilmClientProp>(Actions.setPromoFilm);
 
