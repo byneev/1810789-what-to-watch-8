@@ -16,6 +16,11 @@ export const getAuthorizeStatus = (state : RootProps) : AuthType => state[NameSp
 
 export const getMyListFilms = (state : RootProps) : FilmClientProp[] => state[NameSpace.user].myListFilms;
 
-export const getCurrentGenre = (state : RootProps) : GenreType => state[NameSpace.user].
+export const getCurrentGenre = (state : RootProps) : GenreType => state[NameSpace.user].currentGenre;
 
-export const getSelectorByGenre = (genre: GenreType):((state: RootProps) => FilmClientProp[]) => createSelector(getFilms, (films : FilmClientProp[]) => films.filter((film) => film.genre === genre));
+export const getSelectorByGenre = (genre: GenreType):((state: RootProps) => FilmClientProp[]) => {
+  if (genre === 'All') {
+    return getFilms;
+  }
+  return createSelector(getFilms, (films : FilmClientProp[]) => films.filter((film) => film.genre === genre));
+};
