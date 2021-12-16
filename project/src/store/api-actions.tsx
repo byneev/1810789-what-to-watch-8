@@ -6,8 +6,9 @@ import { ThunkActionResult } from '../types/thunk-type';
 import { UserLoginProp } from '../types/user-type';
 import { convertServerFilmToClient } from '../utils/adapter';
 import { APIRoute, AuthType } from '../utils/const';
+import { getUnickGenres } from '../utils/functions';
 import { removeToken, setToken } from '../utils/token';
-import { setAuthorizeStatus, setCurrentFilm, setCurrentReviews, setFilms, setMyListFilms, setPromoFilm, setSimilarFilms } from './actions';
+import { setAuthorizeStatus, setCurrentFilm, setCurrentReviews, setFilms, setGenres, setMyListFilms, setPromoFilm, setSimilarFilms } from './actions';
 
 export const checkAutorizeStatus = ():ThunkActionResult => async (dispatch, _getState, api) => {
   try {
@@ -34,7 +35,9 @@ export const LogoutFromCite = ():ThunkActionResult => async (dispatch, _getState
 
 export const getFilmsFromServer = ():ThunkActionResult => async (dispatch, _getState, api) => {
   const response = await api.get(`${APIRoute.FILMS}`);
-  dispatch(setFilms(response.data.map((film : FilmServerProp) => convertServerFilmToClient(film))));
+  const films = response.data.map((film : FilmServerProp) => convertServerFilmToClient(film));
+  dispatch(setFilms(films));
+  dispatch(setGenres(getUnickGenres(films)));
 };
 
 export const getFilmById = (id:number):ThunkActionResult => async (dispatch, _getState, api) => {

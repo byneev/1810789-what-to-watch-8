@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-import React, { MouseEvent, MouseEventHandler, useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCurrentGenre, getSelectorByGenre } from '../../store/selectors';
-import { FilmClientProp } from '../../types/film-type';
-import { FILMS_COUNT } from '../../utils/const';
 import FilmPreview from '../film-preview/film-preview';
 import FilmsList from '../films-list/films-list';
 import GenresList from '../genres-list/genres-list';
@@ -35,7 +33,7 @@ function Main():JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList />
+          <GenresList currentGenre={currentGenre} resetDeltaHandle={resetDeltaHandle} />
           <FilmsList films={currentFilms} />
           {!isHideButton && <MoreButton onButtonClick={moreButtonClickHandle} />}
         </section>

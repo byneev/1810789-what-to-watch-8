@@ -13,6 +13,7 @@ const enum Actions {
   setMyListFilms = 'user/setMyListFilms',
   setSimilarFilms = 'app/setSimilarFilms',
   setPromoFilm = 'app/setPromoFilm',
+  setGenres = 'app/setGenres',
 }
 
 export const setFilms = createAction<FilmClientProp[]>(Actions.setFilms);
@@ -33,3 +34,4 @@ export const setSimilarFilms = createAction<FilmClientProp[]>(Actions.setSimilar
 
 export const setPromoFilm = createAction<FilmClientProp>(Actions.setPromoFilm);
 
+export const setGenres = createAction<GenreType[]>(Actions.setGenres);

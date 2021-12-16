@@ -12,7 +12,6 @@ export const convertServerUserAuthToClient = (userAuth: UserAuthServerProp) : Us
 };
 
 export const convertServerFilmToClient = (film: FilmServerProp) : FilmClientProp => {
-  console.log(film);
   if (!film.poster_image ||
     !film.preview_image ||
     !film.background_image ||

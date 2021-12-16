@@ -18,7 +18,9 @@ export const getMyListFilms = (state : RootProps) : FilmClientProp[] => state[Na
 
 export const getCurrentGenre = (state : RootProps) : GenreType => state[NameSpace.user].currentGenre;
 
-export const getSelectorByGenre = (genre: GenreType):((state: RootProps) => FilmClientProp[]) => {
+export const getGenres = (state: RootProps) : GenreType[] => state[NameSpace.webApp].genres;
+
+export const getSelectorByGenre = (genre: GenreType | string):((state: RootProps) => FilmClientProp[]) => {
   if (genre === 'All') {
     return getFilms;
   }
