@@ -1,30 +1,46 @@
-import { useEffect } from 'react';
+/* eslint-disable no-console */
+import { SyntheticEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentFilm } from '../../store/actions';
-// import { useParams } from 'react-router-dom';
-import { getCurrentFilm, getCurrentTab, getFilms } from '../../store/selectors';
+import { RouteComponentProps } from 'react-router-dom';
+import { setCurrentTab } from '../../store/actions';
+import { getCommentsByFilm, getFilmById,  getSimilarFilmsFromServer } from '../../store/api-actions';
+import { getCurrentFilm, getCurrentTab, getSimilarFilms } from '../../store/selectors';
+import { TabType } from '../../utils/const';
 import { getTabByContext } from '../../utils/functions';
 import FilmsList from '../films-list/films-list';
 import Logo from '../logo/logo';
 import Spinner from '../spinner/spinner';
 import UserBlock from '../user-block/user-block';
 
-function FilmDetails():JSX.Element {
-  // const {idFromRoute} = useParams();
-  // get film by id
+export type FilmDetailsProp = {
+  id: string,
+}
+function FilmDetails(props: RouteComponentProps<FilmDetailsProp>):JSX.Element {
+  const id = props.match.params.id;
+
   const tab = useSelector(getCurrentTab);
-  const films = useSelector(getFilms);
   const dispatch = useDispatch();
   const film = useSelector(getCurrentFilm);
+  const films = useSelector(getSimilarFilms);
 
   useEffect(() => {
-    dispatch(setCurrentFilm(films[0]));
-    return () => {
-      dispatch(setCurrentFilm(null));
-    };
-  });
+    dispatch(getFilmById(+id));
+    dispatch(getSimilarFilmsFromServer(+id));
+    dispatch(getCommentsByFilm(+id));
+  }, [id]);
 
-  if (!film) {
+  const tabClickHandle = (evt: SyntheticEvent<EventTarget>) => {
+    evt.preventDefault();
+    if (!(evt.target instanceof HTMLAnchorElement)) {
+      return;
+    }
+    const tabName = evt.target.dataset.value as TabType;
+    if (tabName) {
+      dispatch(setCurrentTab(tabName));
+    }
+  };
+
+  if (!film || films.length === 0) {
     return <Spinner />;
   }
 
@@ -80,13 +96,13 @@ function FilmDetails():JSX.Element {
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item film-nav__item--active">
-                    <a href="/" className="film-nav__link">Overview</a>
+                    <a onClick={tabClickHandle} data-value={TabType.OVERVIEW} href="/" className="film-nav__link">Overview</a>
                   </li>
                   <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Details</a>
+                    <a onClick={tabClickHandle} data-value={TabType.DETAILS} href="/" className="film-nav__link">Details</a>
                   </li>
                   <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Reviews</a>
+                    <a onClick={tabClickHandle} data-value={TabType.REVIEWS} href="/" className="film-nav__link">Reviews</a>
                   </li>
                 </ul>
               </nav>
@@ -100,12 +116,12 @@ function FilmDetails():JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmsList films={films.slice(4)} />
+          <FilmsList films={films.slice(0, 4)} />
         </section>
         <footer className="page-footer">
           <Logo />
           <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
+            <p>© 2021 What to watch Ltd.</p>
           </div>
         </footer>
       </div>

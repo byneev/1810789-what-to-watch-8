@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { CommentProp } from '../types/comment-type';
 import { FilmClientProp } from '../types/film-type';
+import { UserAuthClientProp } from '../types/user-type';
 import { AuthType, GenreType, TabType } from '../utils/const';
 
 const enum Actions {
@@ -14,6 +15,7 @@ const enum Actions {
   setSimilarFilms = 'app/setSimilarFilms',
   setPromoFilm = 'app/setPromoFilm',
   setGenres = 'app/setGenres',
+  setUserBlock = 'user/setUserBlock',
 }
 
 export const setFilms = createAction<FilmClientProp[]>(Actions.setFilms);
@@ -35,3 +37,6 @@ export const setSimilarFilms = createAction<FilmClientProp[]>(Actions.setSimilar
 export const setPromoFilm = createAction<FilmClientProp>(Actions.setPromoFilm);
 
 export const setGenres = createAction<GenreType[]>(Actions.setGenres);
+
+export const setUserBlock = createAction<UserAuthClientProp>(Actions.setUserBlock);
+

@@ -7,6 +7,7 @@ import {history} from '../../utils/history';
 import { AppRoute } from '../../utils/const';
 import FilmDetails from '../film-details/film-details';
 import MyList from '../my-list/my-list';
+import Login from '../login/login';
 
 function App(): JSX.Element {
   const films = useSelector(getFilms);
@@ -23,6 +24,9 @@ function App(): JSX.Element {
         <Route path={`${AppRoute.FILMS}:id`} component={FilmDetails} exact />
         <Route path={AppRoute.MY_LIST} exact>
           <MyList />
+        </Route>
+        <Route path={AppRoute.SIGN_IN} exact>
+          <Login />
         </Route>
       </Switch>
     </Router>

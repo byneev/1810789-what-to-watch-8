@@ -1,7 +1,7 @@
 import {  GenreType, TabType } from '../../utils/const';
 import { CommentProp } from '../../types/comment-type';
 import { createReducer } from '@reduxjs/toolkit';
-import { setCurrentFilm, setCurrentReviews, setFilms, setGenres, setSimilarFilms } from '../actions';
+import { setCurrentFilm, setCurrentReviews, setCurrentTab, setFilms, setGenres, setSimilarFilms } from '../actions';
 import { FilmClientProp } from '../../types/film-type';
 
 export type AppReducerState = {
@@ -36,5 +36,7 @@ export const AppReducer = createReducer(initialAppState, (builder) => {
       state.similarFilms = payload;
     }).addCase(setGenres, (state, { payload }) => {
       state.genres = payload;
+    }).addCase(setCurrentTab, (state, { payload }) => {
+      state.currentTab = payload;
     });
 });

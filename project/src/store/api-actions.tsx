@@ -4,11 +4,11 @@ import { CommentPostProp } from '../types/comment-type';
 import { FilmServerProp } from '../types/film-type';
 import { ThunkActionResult } from '../types/thunk-type';
 import { UserLoginProp } from '../types/user-type';
-import { convertServerFilmToClient } from '../utils/adapter';
+import { convertServerFilmToClient, convertServerUserAuthToClient } from '../utils/adapter';
 import { APIRoute, AuthType } from '../utils/const';
 import { getUnickGenres } from '../utils/functions';
 import { removeToken, setToken } from '../utils/token';
-import { setAuthorizeStatus, setCurrentFilm, setCurrentReviews, setFilms, setGenres, setMyListFilms, setPromoFilm, setSimilarFilms } from './actions';
+import { setAuthorizeStatus, setCurrentFilm, setCurrentReviews, setFilms, setGenres, setMyListFilms, setPromoFilm, setSimilarFilms, setUserBlock } from './actions';
 
 export const checkAutorizeStatus = ():ThunkActionResult => async (dispatch, _getState, api) => {
   try {
@@ -24,6 +24,7 @@ export const checkAutorizeStatus = ():ThunkActionResult => async (dispatch, _get
 export const loginToCite = (prop : UserLoginProp):ThunkActionResult => async (dispatch, _getState, api) => {
   const response = await api.post(`${APIRoute.LOGIN}`, prop);
   setToken(response.data.token);
+  dispatch(setUserBlock(convertServerUserAuthToClient(response.data)));
   dispatch(setAuthorizeStatus(AuthType.AUTH));
 };
 
@@ -41,13 +42,13 @@ export const getFilmsFromServer = ():ThunkActionResult => async (dispatch, _getS
 };
 
 export const getFilmById = (id:number):ThunkActionResult => async (dispatch, _getState, api) => {
-  const response = await api.get(`${APIRoute.FILMS}${id}`);
+  const response = await api.get(`${APIRoute.FILMS}/${id}`);
   dispatch(setCurrentFilm(convertServerFilmToClient(response.data)));
 };
 
-export const getSimilarFilms = (id: number):ThunkActionResult => async (dispatch, _getState, api) => {
+export const getSimilarFilmsFromServer = (id: number):ThunkActionResult => async (dispatch, _getState, api) => {
   const response = await api.get(`${APIRoute.FILMS}/${id}/similar`);
-  dispatch(setSimilarFilms(response.data));
+  dispatch(setSimilarFilms(response.data.map((film : FilmServerProp) => convertServerFilmToClient(film))));
 };
 
 export const getPromoFilm = ():ThunkActionResult => async (dispatch, _getState, api) => {
